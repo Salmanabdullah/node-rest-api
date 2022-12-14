@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
+const userRoute=require("./routes/users")
+const authRoute=require("./routes/auth")
 
 //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 dotenv.config();
@@ -27,9 +29,16 @@ app.use(helmet());
 app.use(morgan("common"));
 
 //Routes HTTP GET requests to the specified path with the specified callback functions.
-app.get("/", (req, res) => {
-  res.send("GET request to homepage");
-});
+// app.get("/", (req, res) => {
+//   res.send("welcome to homepage");
+// });
+
+// app.get("/users", (req, res) => {
+//   res.send("welcome to UserPage");
+// });
+
+app.use("/api/users", userRoute)
+app.use("/api/auth", authRoute)
 
 app.listen(8800, () => {
   console.log("Backend server is running");

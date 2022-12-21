@@ -12,9 +12,10 @@ const authRoute=require("./routes/auth")
 //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 dotenv.config();
 
-//You can connect to MongoDB with the mongoose.connect() method. localhost will be chanaged to process.env.VARIABLE_NAME_ON_.ENVfile
-mongoose.connect(process.env.MONGO_URL, () => {
-  console.log("connected to MONGO_DB");
+//database connection
+mongoose.connect(process.env.MONGO_URL, (err) => {
+  if (err) console.log("jdfhdfjdh")
+  else console.log("connected to MONGO_DB"); 
 });
 
 /************middlewares*********************/

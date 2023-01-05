@@ -11,7 +11,7 @@ const UserSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      max: 30, 
+      max: 30,
       require: true,
       unique: true,
     },
@@ -40,6 +40,22 @@ const UserSchema = new mongoose.Schema(
     isAdmin: {
       type: Boolean,
       default: false,
+    },
+    desc: {
+      type: String,
+      max: 50,
+    },
+    city: {
+      type: String,
+      max: 50,
+    },
+    from: {
+      type: String,
+      max: 50,
+    },
+    relationship: {
+      type: Number,
+      enum: [1, 2, 3],
     },
   },
   { timestamps: true }

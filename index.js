@@ -6,8 +6,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const helmet = require("helmet");
 const morgan = require("morgan");
-const userRoute=require("./routes/users");
-const authRoute=require("./routes/auth");
+const userRoute = require("./routes/users");
+const authRoute = require("./routes/auth");
 
 //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 dotenv.config();
@@ -17,9 +17,10 @@ dotenv.config();
 //   console.log("connected to MONGO_DB");
 // });
 
-mongoose.connect(process.env.MONGO_URL)
-  .then(()=> console.log("connected"))
-  .catch(()=>console.log("No connection"))
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => console.log("connected"))
+  .catch(() => console.log("No connection"));
 /************middlewares*********************/
 
 //This is a built-in middleware function in Express. It parses incoming requests with JSON payloads and is based on body-parser.
@@ -40,9 +41,9 @@ app.use(morgan("common"));
 //   res.send("welcome to UserPage");
 // });
 
-app.use("/api/users", userRoute)
-app.use("/api/auth", authRoute)
+app.use("/api/users", userRoute);
+app.use("/api/auth", authRoute);
 
-app.listen(8800, () => {
+app.listen(process.env.PORT, () => {
   console.log("Backend server is running");
 });

@@ -13,10 +13,6 @@ const authRoute = require("./routes/auth");
 dotenv.config();
 
 //database connection
-// mongoose.connect(process.env.MONGO_URL,() => {
-//   console.log("connected to MONGO_DB");
-// });
-
 mongoose
   .connect(process.env.MONGO_URL)
   .then(() => console.log("connected"))

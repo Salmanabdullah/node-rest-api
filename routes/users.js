@@ -3,7 +3,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 //update user
 router.put("/:id", async (req, res) => {
-  if (req.body.userId === req.params.id || req.user.isAdmin) {
+  if (req.body.userId === req.params.id || req.body.isAdmin) {
     if (req.body.password) {
       try {
         const salt = await bcrypt.genSalt(10);
@@ -28,7 +28,21 @@ router.put("/:id", async (req, res) => {
       .json("You are allowed to update your account only!!");
   }
 });
+
 //delete user
+router.delete("/:id", async (req, res) => {
+  if (req.body.userId === req.params.id || req.body.isAdmin) {
+    try {
+      const user = await User.findByIdAndDelete(req.params.id);
+      res.status(200).json("User deleted");
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  } else {
+    return res.status(403).json("You are not authorised to delete");
+  }
+});
+
 //get a user
 //follow a user
 //unfollow a user

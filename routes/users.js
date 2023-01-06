@@ -11,7 +11,7 @@ router.put("/:id", async (req, res) => {
 
         res.status(200).json("password has been updated");
       } catch (error) {
-        return res.status(400).json(error);
+        res.status(400).json(error);
       }
     }
     try {
@@ -20,7 +20,7 @@ router.put("/:id", async (req, res) => {
       });
       res.status(200).json("Account has been updated");
     } catch (error) {
-      return res.status(400).json(error);
+      res.status(400).json(error);
     }
   } else {
     return res
@@ -44,6 +44,15 @@ router.delete("/:id", async (req, res) => {
 });
 
 //get a user
+router.get("/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    const { password, updatedAt, isAdmin, ...rest } = user._doc;
+    res.status(200).json(rest);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 //follow a user
 //unfollow a user
 

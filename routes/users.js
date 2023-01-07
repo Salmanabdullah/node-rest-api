@@ -34,6 +34,7 @@ router.delete("/:id", async (req, res) => {
   if (req.body.userId === req.params.id || req.body.isAdmin) {
     try {
       const user = await User.findByIdAndDelete(req.params.id);
+
       res.status(200).json("User deleted");
     } catch (error) {
       return res.status(500).json(error);
@@ -48,12 +49,35 @@ router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, updatedAt, isAdmin, ...rest } = user._doc;
+
     res.status(200).json(rest);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
 //follow a user
+router.put("/:id/follow", async (req, res) => {
+  if (req.body.userId !== req.params.id) {
+    try {
+      const userToFollow = await User.findById(req.params.id);
+      const currentUser = await User.findById(req.body.userId);
+
+      if (!userToFollow.followers.includes(req.body.userId)) {
+        await userToFollow.updateOne({ $push: { followers: req.body.userId } });
+        await currentUser.updateOne({ $push: { following: req.params.id } });
+
+        res.status(200).json("You are now following " + userToFollow.username);
+      } else {
+        res.status(400).json("You are already following this user");
+      }
+    } catch (error) {
+      res.status(404).json(error);
+    }
+  } else {
+    res.status(403).json("You can't follow yourself");
+  }
+});
 //unfollow a user
 
 module.exports = router;

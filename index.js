@@ -8,6 +8,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const userRoute = require("./routes/users");
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/posts");
 
 //Dotenv is a zero-dependency module that loads environment variables from a .env file into process.env. Storing configuration in the environment separate from code is based on The Twelve-Factor App methodology.
 dotenv.config();
@@ -28,17 +29,10 @@ app.use(helmet());
 //HTTP request logger middleware for node.js
 app.use(morgan("common"));
 
-//Routes HTTP GET requests to the specified path with the specified callback functions.
-// app.get("/", (req, res) => {
-//   res.send("welcome to homepage");
-// });
-
-// app.get("/users", (req, res) => {
-//   res.send("welcome to UserPage");
-// });
-
+//Routes
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/posts", postRoute);
 
 app.listen(process.env.PORT, () => {
   console.log("Backend server is running");

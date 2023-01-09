@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const { json } = require("express");
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 //create a post
 router.post("/", async (req, res) => {
@@ -69,7 +70,5 @@ router.get("/:id", async (req, res) => {
     res.status(404).json(error);
   }
 });
-
-//get timeline posts
 
 module.exports = router;
